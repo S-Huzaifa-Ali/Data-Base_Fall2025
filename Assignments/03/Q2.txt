@@ -1,0 +1,48 @@
+-- 1
+SELECT itemName
+FROM MenuItem
+WHERE isAvailable = 0 AND price > 500;
+
+-- 2
+SELECT itemName
+FROM MenuItem
+WHERE (category = 'Beverage' AND price > 300)
+   OR (category = 'Dessert');
+
+-- 3
+SELECT itemName, price
+FROM MenuItem
+WHERE category = 'Snack' AND isAvailable = 1;
+
+-- 4
+SELECT itemName, price/100 AS price_in_rupees
+FROM MenuItem
+WHERE category = 'Snack' AND isAvailable = 1;
+
+-- 5
+SELECT DISTINCT s.supplierID
+FROM Supplies s
+JOIN MenuItem m ON s.itemID = m.itemID
+WHERE m.itemName = 'Cappuccino';
+
+-- 6
+SELECT e.name, c.cafeName
+FROM Employee e
+JOIN Cafe c ON e.cafeID = c.cafeID
+WHERE e.address = c.city;
+
+-- 7
+SELECT empID
+FROM Employee
+WHERE salary <> 50000;
+
+-- 8
+SELECT s1.supplierID
+FROM Supplier s1
+JOIN Supplier s2 ON s1.supplierID = s2.supplierID
+WHERE s1.city = 'Karachi' AND s2.city = 'Lahore';
+
+-- 9
+SELECT itemName
+FROM MenuItem
+WHERE itemID NOT IN (SELECT itemID FROM Supplies);
