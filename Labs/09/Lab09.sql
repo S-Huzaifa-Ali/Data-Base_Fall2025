@@ -64,7 +64,7 @@ BEFORE INSERT ON EMP
 FOR EACH ROW
 WHEN (NEW.department_id IS NULL)
 BEGIN
-    :NEW.department_id := 10;  -- Default department (e.g., Administration)
+    :NEW.department_id := 10;
 END;
 /
 
@@ -79,11 +79,9 @@ CREATE OR REPLACE TRIGGER trg_sales_compound
 FOR INSERT ON SALES
 COMPOUND TRIGGER
 
-    -- Global variables
     g_total_amount NUMBER := 0;
     g_row_count     NUMBER := 0;
 
-    -- Executed once before the statement
     BEFORE STATEMENT IS
     BEGIN
         g_total_amount := 0;
@@ -91,14 +89,12 @@ COMPOUND TRIGGER
         DBMS_OUTPUT.PUT_LINE('Bulk insert started...');
     END BEFORE STATEMENT;
 
-    -- Executed for each row
     AFTER EACH ROW IS
     BEGIN
         g_total_amount := g_total_amount + (:NEW.quantity * :NEW.unit_price);
         g_row_count    := g_row_count + 1;
     END AFTER EACH ROW;
 
-    -- Executed once after the statement
     AFTER STATEMENT IS
     BEGIN
         INSERT INTO SALES_SUMMARY(process_date, total_amount, rows_processed)
@@ -165,3 +161,4 @@ BEGIN
 END;
 
 /
+
