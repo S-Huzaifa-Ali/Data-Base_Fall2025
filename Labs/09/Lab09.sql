@@ -5,9 +5,6 @@ BEFORE INSERT ON STUDENTS
 FOR EACH ROW
 BEGIN
     :NEW.student_name := UPPER(:NEW.student_name);
-    -- If there are multiple name columns, apply to all:
-    -- :NEW.first_name := UPPER(:NEW.first_name);
-    -- :NEW.last_name  := UPPER(:NEW.last_name);
 END;
 /
 
@@ -166,4 +163,5 @@ BEGIN
         SYS_CONTEXT('USERENV','IP_ADDRESS')
     );
 END;
+
 /
